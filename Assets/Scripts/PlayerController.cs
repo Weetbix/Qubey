@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	
 	public float currentThrowStrength = 0.0f;
 	public float MaxThrowStrength = 1.0f;
+	public float MinThrowStrength = 0.0f;
 	public float ThrowStrengthBuildUpSpeed = 0.5f;
 	
 	private int currentGun = 0;
@@ -106,13 +107,13 @@ public class PlayerController : MonoBehaviour {
 	
 	private void Throw()
 	{
-		const float throwOffsetDistance = 0.5f;
+		const float throwOffsetDistance = 1.0f;
 		var objectPosition = transform.position + (AimDirection * throwOffsetDistance);
 		GameObject newObject = Instantiate(Resources.Load(gunSelection[currentGun][1]), objectPosition, Quaternion.identity) as GameObject;
 		
 		
 		// Throw it!
-		newObject.rigidbody.AddForce(AimDirection * currentThrowStrength); 
+		newObject.rigidbody.AddForce(AimDirection * (MinThrowStrength + currentThrowStrength)); 
 	}
 	
 	void HandleWeaponSelection()
