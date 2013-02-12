@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 	public float JumpRayDistance = 1.1f;
 	public float JumpForce = 4000.0f;
 	
-	public float currentThrowStrength = 0.0f;
+	private float currentThrowStrength = 0.0f;
 	public float MaxThrowStrength = 1.0f;
 	public float MinThrowStrength = 0.0f;
 	public float ThrowStrengthBuildUpSpeed = 0.5f;
@@ -17,8 +17,10 @@ public class PlayerController : MonoBehaviour {
 	private int currentGun = 0;
 	private List<List<string>> gunSelection = new List<List<string>>()
 	{
+		// GUI String - Prefab name to create when you fire
 		{ new List<string>(){ "Velocity Effector", "AreaCreator_VelocityEffector" } },
-		{ new List<string>(){ "Scale Effector", "AreaCreator_ScaleEffector" } }
+		{ new List<string>(){ "Scale Effector", "AreaCreator_ScaleEffector" } },
+		{ new List<string>(){ "Scale Doubler", "AreaCreator_ScaleSetterEffector" } }
 	};
 	
 	
@@ -111,7 +113,6 @@ public class PlayerController : MonoBehaviour {
 		var objectPosition = transform.position + (AimDirection * throwOffsetDistance);
 		GameObject newObject = Instantiate(Resources.Load(gunSelection[currentGun][1]), objectPosition, Quaternion.identity) as GameObject;
 		
-		
 		// Throw it!
 		newObject.rigidbody.AddForce(AimDirection * (MinThrowStrength + currentThrowStrength)); 
 	}
@@ -120,5 +121,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetKeyDown(KeyCode.Alpha1)) currentGun = 0;
 		if(Input.GetKeyDown(KeyCode.Alpha2)) currentGun = 1;
+		if(Input.GetKeyDown(KeyCode.Alpha3)) currentGun = 2;
 	}
 }
